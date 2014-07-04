@@ -1,0 +1,40 @@
+{
+  "name": "losin",
+  "version": "0.0.1",
+  "author": {
+    "name": "Yaroslav Pogrebnyak",
+    "url": "http://pogrebnyak.info",
+    "email": "yyyaroslav@gmail.com"
+  },
+  "homepage": "http://github.com/yyyar/losin",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yyyar/losin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yyyar/losin/issues"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.10.12"
+  },
+  "keywords": [
+    "protocol",
+    "rpc",
+    "request-response",
+    "validation"
+  ],
+  "scripts": {
+    "test": "nodeunit tests --reporter verbose"
+  },
+  "main": "./lib/index.js",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "jayschema": "^0.2.7",
+    "lodash": "^2.4.1",
+    "shortid": "^2.0.1"
+  },
+  "devDependencies": {
+    "nossock": "0.0.10"
+  }
+}
