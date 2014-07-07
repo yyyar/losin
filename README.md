@@ -145,7 +145,7 @@ It is JSON and has the following format:
 
 ```javascript
 var _ = require('lodash'),
-    Losin = require('../lib')('nossock'),
+    Losin = require('losin')('nossock'),
     nossock = require('nossock');
 
 var spec = require('./spec.json');
@@ -177,7 +177,7 @@ var server = nossock.createServer('tcp', {port: 8797}, function(socket) {
 ##### client.js
 ```javascript
 var _ = require('lodash'),
-    Losin = require('../lib')('nossock'),
+    Losin = require('losin')('nossock'),
     nossock = require('nossock');
 
 var spec = require('./spec.json');
