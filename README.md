@@ -56,7 +56,7 @@ Handling:
 lo.onRequest('someReq', function(req, sendResponse) {
 
     // success response
-    sendResponse(null, 10*2);
+    sendResponse(null, req[0] + req[1]);
     
     // or error response
     // sendResponse('Something bad happened', null);
@@ -66,7 +66,7 @@ lo.onRequest('someReq', function(req, sendResponse) {
 
 Sending:
 ```javascript
-lo.sendRequest('sum', 10, function(err, data) {
+lo.sendRequest('sum', [1,2], function(err, data) {
 
     // err - if we got error response, or timeout happened
     if (err) {
@@ -83,9 +83,9 @@ lo.sendRequest('sum', 10, function(err, data) {
 Typically, you need to provide spec (dictionary) to Losin to enable validation.
 Validation happens by defining JaySchema.
 It is JSON and has the following format:
-```json
+```javascript
 {
-   ...
+   // ...
    
     // pub-sub message
     "someMessage": {
@@ -99,17 +99,16 @@ It is JSON and has the following format:
         "ttl": 10,  // in seconds
         "req": { JaySchema },
         "res": { JaySchema }
-    },
+    }
   
-   ...
+   //...
 ```
 
 #### Complete example
 
-##### Spec
+##### spec.json
 
 ```json
-spec.json
 {
 
     "info": {
