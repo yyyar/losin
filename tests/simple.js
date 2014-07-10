@@ -18,7 +18,8 @@ module.exports = {
 
         var server = nossock.createServer('tcp', {port: 8797}, function(socket) {
 
-            var lo = new Losin(socket, spec);
+            var lo = new Losin(socket);
+            lo.scan(__dirname + '/specs');
 
             /**
              * Handle info message
@@ -43,7 +44,8 @@ module.exports = {
 
         nossock.createClient('tcp', {port: 8797}, function(socket) {
 
-            var lo = new Losin(socket, spec);
+            var lo = new Losin(socket);
+            lo.scan(__dirname + '/specs');
 
             lo.sendMessage('info', 'hello world!');
 

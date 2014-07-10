@@ -33,7 +33,8 @@
   "dependencies": {
     "jayschema": "^0.2.7",
     "lodash": "^2.4.1",
-    "shortid": "^2.0.1"
+    "shortid": "^2.0.1",
+    "wrench": "^1.5.8"
   },
   "devDependencies": {
     "nossock": "0.0.10"

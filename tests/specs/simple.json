@@ -1,31 +1,33 @@
-{
+[
+    {
+        "info": {
+            "description": "Just some info message with payload",
+            "type": "pub-sub",
 
-    "info": {
-        "description": "Just some info message with payload",
-        "type": "pub-sub",
-
-        "msg": {
-            "payload": {
-                "type": "string"
+            "msg": {
+                "payload": {
+                    "type": "string"
+                }
             }
         }
     },
 
-    "sum": {
-        "description": "Sum endpoint that does sum of numbers",
-        "type": "req-res",
-        "ttl": 30,
+    {
+        "sum": {
+            "description": "Sum endpoint that does sum of numbers",
+            "type": "req-res",
+            "ttl": 30,
 
-        "req": {
-            "description": "Array of numbers to sum",
-            "type": "array",
-            "items": { "type": "number"}
-        },
+            "req": {
+                "description": "Array of numbers to sum",
+                "type": "array",
+                "items": { "type": "number"}
+            },
 
-        "res": {
-            "description": "Sum of numbers",
-            "type": "number"
+            "res": {
+                "description": "Sum of numbers",
+                "type": "number"
+            }
         }
     }
-}
-
+]
