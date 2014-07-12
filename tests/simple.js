@@ -24,8 +24,9 @@ module.exports = {
             /**
              * Handle info message
              */
-            lo.onMessage('info', function(msg) {
+            var e = lo.onMessage('info', function(msg) {
                 console.log(msg);
+                e.off();
             });
 
             /**
@@ -47,7 +48,8 @@ module.exports = {
             var lo = new Losin(socket);
             lo.scan(__dirname + '/specs');
 
-            lo.sendMessage('info', 'hello world!');
+            lo.sendMessage('info', 'hello world - 1');
+            lo.sendMessage('info', 'hello world - 2');
 
             lo.sendRequest('sum', [1,2,3], function(err, data) {
                 if (err) {
