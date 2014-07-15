@@ -3,10 +3,11 @@
  */
 
 var _ = require('lodash'),
-    Losin = require('../lib')('nossock'),
+    LosinFactory = require('../lib')('nossock').LosinFactory,
     nossock = require('nossock');
 
-var spec = require('./specs/simple.json');
+var factory = new LosinFactory();
+factory.scan(__dirname + '/specs');
 
 /* exports */
 module.exports = {
@@ -18,8 +19,7 @@ module.exports = {
 
         var server = nossock.createServer('tcp', {port: 8797}, function(socket) {
 
-            var lo = new Losin(socket);
-            lo.scan(__dirname + '/specs');
+            var lo = factory.createLosin(socket);
 
             /**
              * Handle info message
@@ -45,8 +45,7 @@ module.exports = {
 
         nossock.createClient('tcp', {port: 8797}, function(socket) {
 
-            var lo = new Losin(socket);
-            lo.scan(__dirname + '/specs');
+            var lo = factory.createLosin(socket);
 
             lo.sendMessage('info', 'hello world - 1');
             lo.sendMessage('info', 'hello world - 2');
