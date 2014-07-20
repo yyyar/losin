@@ -1,12 +1,13 @@
 /**
  * simple.js - simple losin test
+ * @author Yaroslav Pogrebnyak <yyyaroslav@gmail.com>
  */
 
 var _ = require('lodash'),
-    LosinFactory = require('../lib')('nossock').LosinFactory,
+    losin = require('../lib')('nossock'),
     nossock = require('nossock');
 
-var factory = new LosinFactory();
+var factory = losin.createLosinFactory();
 factory.scan(__dirname + '/specs');
 
 /* exports */

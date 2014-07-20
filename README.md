@@ -19,9 +19,9 @@ $ npm install losin
 
 ```javascript
 // only nossock adapter for now
-var Losin = require('../lib')('nossock').Losin; 
+var losin = require('../lib')('nossock'); 
  // spec is dictionary, see Validation section for details
-var lo = new Losin(socket, spec, config);
+var lo = losin.createLosin(socket, config);
 ```
 
 config is optional and has the following format:
@@ -145,7 +145,7 @@ It is JSON and has the following format:
 
 ```javascript
 var _ = require('lodash'),
-    Losin = require('losin')('nossock').Losin,
+    losin = require('losin')('nossock'),
     nossock = require('nossock');
 
 var spec = require('./spec.json');
@@ -155,7 +155,8 @@ var spec = require('./spec.json');
 
 var server = nossock.createServer('tcp', {port: 8797}, function(socket) {
 
-  var lo = new Losin(socket, spec);
+  var lo = losin.createLosin(socket);
+  lo.register(spec);
 
   /**
    * Handle info message
@@ -177,7 +178,7 @@ var server = nossock.createServer('tcp', {port: 8797}, function(socket) {
 ##### client.js
 ```javascript
 var _ = require('lodash'),
-    Losin = require('losin')('nossock').Losin,
+    losin = require('losin')('nossock'),
     nossock = require('nossock');
 
 var spec = require('./spec.json');
@@ -186,7 +187,8 @@ var spec = require('./spec.json');
 
 nossock.createClient('tcp', {port: 8797}, function(socket) {
 
-  var lo = new Losin(socket, spec);
+  var lo = losin.createLosin(socket);
+  lo.register(spec);
 
   /**
    * Send info message
