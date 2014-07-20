@@ -20,7 +20,6 @@ $ npm install losin
 ```javascript
 // only nossock adapter for now
 var losin = require('../lib')('nossock'); 
- // spec is dictionary, see Validation section for details
 var lo = losin.createLosin(socket, config);
 ```
 
@@ -39,7 +38,7 @@ config is optional and has the following format:
 
 Handling:
 ```javascript
-lo.onMessage('info', function(msg) {
+lo.handle('info', function(msg) {
     console.log(msg);
 });
 ```
@@ -53,7 +52,7 @@ lo.sendMessage('info', 'Hello');
 
 Handling:
 ```javascript
-lo.onRequest('someReq', function(req, sendResponse) {
+lo.handle('someReq', function(req, sendResponse) {
 
     // success response
     sendResponse(null, req[0] + req[1]);
@@ -161,14 +160,14 @@ var server = nossock.createServer('tcp', {port: 8797}, function(socket) {
   /**
    * Handle info message
    */
-  lo.onMessage('info', function(msg) {
+  lo.handle('info', function(msg) {
       console.log(msg);
   });
 
   /**
    * Handle sum request
    */
-  lo.onRequest('sum', function(nums, sendResponse) {
+  lo.handle('sum', function(nums, sendResponse) {
     sendResponse(null, _.reduce(nums, function(s,e) {return s+e; }, 0));
   });
 }).listen(8797);

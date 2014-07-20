@@ -25,7 +25,7 @@ module.exports = {
             /**
              * Handle info message
              */
-            var e = lo.onMessage('info', function(msg) {
+            var e = lo.handle('info', function(msg) {
                 console.log(msg);
                 e.off();
             });
@@ -33,7 +33,7 @@ module.exports = {
             /**
              * Handle sum request
              */
-            lo.onRequest('sum', function(nums, sendResponse) {
+            lo.handle('sum', function(nums, sendResponse) {
                 sendResponse(null, _.reduce(nums, function(s,e) {return s+e; }, 0));
                 socket.end();
                 server.close();
