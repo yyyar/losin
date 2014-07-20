@@ -19,8 +19,11 @@ $ npm install losin
 
 ```javascript
 // only nossock adapter for now
-var losin = require('../lib')('nossock'); 
-var lo = losin.createLosin(socket, config);
+var losin = require('../lib')('nossock'),
+    lo = losin.createLosin(socket, config);
+
+// Regestering messages (see validation section for more info on spec)
+lo.register( /* {spec} */ );
 ```
 
 config is optional and has the following format:
