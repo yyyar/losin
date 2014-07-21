@@ -1,4 +1,4 @@
-### Losin
+## Losin
 
 [![Build Status](https://travis-ci.org/yyyar/losin.svg?branch=master)](https://travis-ci.org/yyyar/losin) [![NPM version](https://badge.fury.io/js/losin.svg)](http://badge.fury.io/js/losin)
 
@@ -10,10 +10,101 @@ Adapters for other libraries (socket.io, etc) will come soon.
 * **Req-Res**: Request-response messages
 * **Timeouts**: Support of timeout handlers in request messages
 
-#### Installation
+### Installation
 ```bash
 $ npm install losin
 ```
+
+### Losin protocol definition
+
+Typically, message is a JSON document.
+
+There are 2 types of messages in Losin:
+* Pub/sub messages
+* Request-respnse messages
+
+#### Pub-sub messages
+Pub-sub are plain messages. One side subscribes on it by name, and other side sends
+it providing the same name and a message. Low-level protocol (socket.io, nossock or other)
+should support this feature out of the box.
+
+*message*
+```
+name = <name>
+body = JSON
+```
+
+#### Req-res messages
+Req-res is request-response messages. One side sends "request" message to another,
+and awaits response for it. Other side provides handler of the request that receives
+request message and sends back response (err, responseObject) where err is null when request was
+successfully processed, and some object otherwise.
+
+Requester side is responsive of generating unique identifier of request, and 
+responder side is responsive of using the same identifier for a response.
+
+There is a default timeout value for request-response messages parties should agree on,
+after this time requester should receive timeout error in err, and implementation should stop
+waiting the response after that time. Timeout value can be configurable for each
+req-res messages individually in message spec (see validation section).
+
+Implementations should follow these naming conventions for implemention req-res. 
+
+*request*
+```
+name = req:<name>:<id>
+ <name> = name of the req-res message
+ <id> = generated unique id, it should match regexp: [-_\w]+, i.e. contain only numbers,
+        alphabetic chars and '-' or '_' chars.
+
+body = JSON
+```
+
+*response*
+```
+name = res:<name>:<id> 
+ <name> = name of req-res-message
+ <id> = id send by requester in request
+
+body = [ <err>, <response> ]  (JSON Array with 2 elements)
+<err> = null | JSON
+<response> = JSON
+```
+
+#### Specs & messages registry: Validation
+Implementation may (it's optional, but very desirable) define a way of validation all
+messages. Parties agree on messages and format of messages defining a registry of
+messages specs. Registry is a JSON document with the following structure:
+```
+{
+    // pub-sub message
+    "someMessage": {
+        "description": "some literate description",
+        "type": "pub-sub",
+        "msg": { JaySchema }
+    },
+
+    // req-res message
+    "someCommand": {
+        "description": "some literate description",
+        "type": "req-res",
+        "ttl": 15, // time-to-live in seconds
+        "req": { JaySchema },
+        "res": { JaySchema }
+    },
+
+    // ...
+    // other messages
+    // ...
+}
+```
+
+Registry is shared between parties so they could be sured they use the right messages and format.
+JaySchema is javascript implementation of JSON schema validation. 
+It follows [JSON Schema Draft v4](http://json-schema.org/documentation.html).
+
+
+### Usage
 
 #### Creating Losin adapter
 
@@ -79,31 +170,6 @@ lo.sendRequest('sum', [1,2], function(err, data) {
 
 });
 
-```
-
-#### Valication & messages spec
-Typically, you need to provide spec (dictionary) to Losin to enable validation.
-Validation happens by defining JaySchema.
-It is JSON and has the following format:
-```javascript
-{
-   // ...
-   
-    // pub-sub message
-    "someMessage": {
-        "type": "pub-sub",     
-        "msg": { JaySchema }
-    },
-  
-    // req-res message
-    "someReqRes": {
-        "type": "req-res",
-        "ttl": 10,  // in seconds
-        "req": { JaySchema },
-        "res": { JaySchema }
-    }
-  
-   //...
 ```
 
 #### Complete example
