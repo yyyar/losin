@@ -13,7 +13,7 @@ factory.scan(__dirname + '/specs');
 /* exports */
 module.exports = {
 
-    'Test simple': function(test) {
+    'Test simple on nossock': function(test) {
 
 
         /* ---------- create server ---------- */

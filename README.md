@@ -2,9 +2,10 @@
 
 [![Build Status](https://travis-ci.org/yyyar/losin.svg?branch=master)](https://travis-ci.org/yyyar/losin) [![NPM version](https://badge.fury.io/js/losin.svg)](http://badge.fury.io/js/losin)
 
-Losin is a small lib that adds request-response and validation capabilities to [nossock](https://github.com/yyyar/nossock).
+Losin is a small lib that adds request-response and validation
+capabilities to [nossock](https://github.com/yyyar/nossock) and [socket.io](http://socket.io/).
+Wrappers for other libraries may come soon.
 
-Adapters for other libraries (socket.io, etc) will come soon.
 
 * **Validation**: Define messages schemas to validate them
 * **Req-Res**: Request-response messages
