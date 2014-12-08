@@ -17,7 +17,7 @@ module.exports = {
         /* ---------- create server ---------- */
 
         var app = require('http').createServer(function(){}),
-        io = require('socket.io')(app);
+           io = require('socket.io').listen(app, {log:false});
 
         app.listen(8797);
 
@@ -38,6 +38,7 @@ module.exports = {
              */
             lo.handle('sum', function(nums, sendResponse) {
                 sendResponse(null, _.reduce(nums, function(s,e) {return s+e; }, 0));
+                socket.disconnect();
                 app.close();
             });
         });
@@ -45,7 +46,7 @@ module.exports = {
 
         /* ---------- create client ---------- */
 
-        var socket = require('socket.io-client')('http://localhost:8797');
+        var socket = require('socket.io-client').connect('http://localhost:8797');
 
         socket.on('connect', function(){
 
@@ -59,8 +60,8 @@ module.exports = {
                     console.log('errrror', err);
                 } else {
                     console.log(data);
-                    test.done();
                     socket.disconnect();
+                    test.done();
                 }
             });
 

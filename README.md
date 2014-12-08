@@ -206,8 +206,10 @@ should support this feature out of the box.
 
 *message*
 ```
-name = <name>
-body = JSON
+{
+    "name": <name>
+    "body": JSON
+}
 ```
 
 #### Req-res messages
@@ -228,23 +230,29 @@ Implementations should follow these naming conventions for implemention req-res.
 
 *request*
 ```
-name = req:<name>:<id>
- <name> = name of the req-res message
- <id> = generated unique id, it should match regexp: [-_\w]+, i.e. contain only numbers,
+{
+    "name": "req:<name>:<id>",
+    "body": JSON
+}
+
+<name> = name of the req-res message
+<id> = generated unique id, it should match regexp: [-_\w]+, i.e. contain only numbers,
         alphabetic chars and '-' or '_' chars.
 
-body = JSON
 ```
 
 *response*
 ```
-name = res:<name>:<id> 
- <name> = name of req-res-message
- <id> = id send by requester in request
+{
+    "name": "res:<name>:<id>",
+    "body": [ <err>, <reponse> ]
+}
 
-body = [ <err>, <response> ]  (JSON Array with 2 elements)
+
+<name> = name of req-res-message
+<id> = id send by requester in request
 <err> = null | JSON
-<response> = JSON
+<response> = null | JSON
 ```
 
 #### Specs & messages registry: Validation

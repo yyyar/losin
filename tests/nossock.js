@@ -35,7 +35,7 @@ module.exports = {
              */
             lo.handle('sum', function(nums, sendResponse) {
                 sendResponse(null, _.reduce(nums, function(s,e) {return s+e; }, 0));
-                socket.end();
+                lo.close()
                 server.close();
             });
 
@@ -56,6 +56,7 @@ module.exports = {
                     console.log(err);
                 } else {
                     console.log(data);
+                    lo.close();
                     test.done();
                 }
             });

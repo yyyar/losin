@@ -1,6 +1,6 @@
 {
   "name": "losin",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "Request-response and validation capabilities for nossock (& other)",
   "author": {
     "name": "Yaroslav Pogrebnyak",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "nossock": "0.0.10",
-    "socket.io": "^1.0.6",
-    "socket.io-client": "^1.0.6"
+    "socket.io": "^1.2.1",
+    "socket.io-client": "^1.2.1"
   }
 }
