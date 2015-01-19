@@ -25,6 +25,10 @@ module.exports = {
 
             var lo = factory.createLosin(socket);
 
+            lo.onClose(function() {
+                console.log('onClose socketio server');
+            });
+
             /**
              * Handle info message
              */
@@ -51,6 +55,10 @@ module.exports = {
         socket.on('connect', function(){
 
             var lo = factory.createLosin(socket);
+
+            lo.onClose(function() {
+                console.log('onClose socketio client');
+            });
 
             lo.sendMessage('info', 'hello world - 1');
             lo.sendMessage('info', 'hello world - 2');

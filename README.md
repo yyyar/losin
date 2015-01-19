@@ -85,6 +85,17 @@ lo.sendRequest('sum', [1,2], function(err, data) {
 
 ```
 
+##### Closing connection & handling connection drop
+```javascript
+// Close connection
+lo.close();
+
+// Handle connection close
+lo.onClose(function() {
+    // some code
+});
+```
+
 #### Complete example
 
 ##### spec.json

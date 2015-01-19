@@ -22,6 +22,10 @@ module.exports = {
 
             var lo = factory.createLosin(socket);
 
+            lo.onClose(function() {
+                console.log('onClose nossock server');
+            });
+
             /**
              * Handle info message
              */
@@ -47,6 +51,10 @@ module.exports = {
         nossock.createClient('tcp', {port: 8797}, function(socket) {
 
             var lo = factory.createLosin(socket);
+
+            lo.onClose(function() {
+                console.log('onClose nossock client');
+            });
 
             lo.sendMessage('info', 'hello world - 1');
             lo.sendMessage('info', 'hello world - 2');
