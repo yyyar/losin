@@ -61,7 +61,7 @@ module.exports = {
 
             lo.sendRequest('sum', [1,2,3], function(err, data) {
                 if (err) {
-                    console.log(err);
+                    console.log('Error: ', err);
                 } else {
                     console.log(data);
                     lo.close();
