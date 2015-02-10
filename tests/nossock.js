@@ -37,7 +37,7 @@ module.exports = {
             /**
              * Handle sum request
              */
-            lo.handle('sum', function(nums, sendResponse) {
+            lo.handleOnce('sum', function(nums, sendResponse) {
                 sendResponse(null, _.reduce(nums, function(s,e) {return s+e; }, 0));
                 lo.close()
                 server.close();
