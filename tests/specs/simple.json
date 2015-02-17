@@ -16,7 +16,7 @@
         "sum": {
             "description": "Sum endpoint that does sum of numbers",
             "type": "req-res",
-            "ttl": 30,
+            "ttl": 2,
 
             "req": {
                 "description": "Array of numbers to sum",

@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/yyyar/losin.svg?branch=master)](https://travis-ci.org/yyyar/losin) [![NPM version](https://badge.fury.io/js/losin.svg)](http://badge.fury.io/js/losin)
 
 Losin is a small lib that adds request-response and validation
-capabilities to [nossock](https://github.com/yyyar/nossock) and [socket.io](http://socket.io/).
+capabilities to [socket.io](http://socket.io/) and [nossock](https://github.com/yyyar/nossock).
 Wrappers for other libraries may come soon.
 
 
@@ -22,8 +22,8 @@ $ npm install losin
 #### Creating Losin
 
 ```javascript
-// only nossock adapter for now
-var losin = require('../lib')('nossock'),
+// create adapter
+var losin = require('losin')('socket.io'),
     lo = losin.createLosin(socket, config);
 
 // Regestering messages (see validation section for more info on spec)
@@ -37,6 +37,9 @@ config is optional and has the following format:
   'processInvalid': false,
   'validationErrorHandler': function(name, errors) {
       console.warn('Validation error', name, errors);
+  },
+  'logHandler': function(type, direction, name, body, err) {
+      console.log(direction + "(" + type + ")", name, ':', type == 'res' && err ? err : '', body);
   }
 }
 ```
@@ -137,18 +140,28 @@ lo.onClose(function() {
 
 ```javascript
 var _ = require('lodash'),
-    losin = require('losin')('nossock'),
-    nossock = require('nossock');
+    losin = require('losin')('socket.io'),
+    app = require('http').createServer(function(){}),
+    io = require('socket.io').listen(app);
+
+    app.listen(8797);
 
 var spec = require('./spec.json');
 
  
-/* ---------- create server ---------- */
+/* ---------- server ---------- */
 
-var server = nossock.createServer('tcp', {port: 8797}, function(socket) {
+io.on('connection', function(socket) {
 
   var lo = losin.createLosin(socket);
   lo.register(spec);
+
+  /**
+   * Handles close
+   */
+  lo.onClose(function() {
+      console.log('onClose socketio server');
+  });
 
   /**
    * Handle info message
@@ -163,21 +176,22 @@ var server = nossock.createServer('tcp', {port: 8797}, function(socket) {
   lo.handle('sum', function(nums, sendResponse) {
     sendResponse(null, _.reduce(nums, function(s,e) {return s+e; }, 0));
   });
-}).listen(8797);
+
+});
 ```
 
 
 ##### client.js
 ```javascript
 var _ = require('lodash'),
-    losin = require('losin')('nossock'),
-    nossock = require('nossock');
+    losin = require('losin')('socket.io'),
+    socket = require('socket.io-client').connect('http://localhost:8797');
 
 var spec = require('./spec.json');
 
-/* ---------- create client ---------- */
+/* ---------- client ---------- */
 
-nossock.createClient('tcp', {port: 8797}, function(socket) {
+socket.on('connect', function(socket) {
 
   var lo = losin.createLosin(socket);
   lo.register(spec);

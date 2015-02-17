@@ -1,6 +1,6 @@
 {
   "name": "losin",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Request-response and validation capabilities for nossock (& other)",
   "author": {
     "name": "Yaroslav Pogrebnyak",
